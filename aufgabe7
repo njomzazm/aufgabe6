@@ -1,0 +1,117 @@
+public interface KZinsen {
+    double ZINS1 = 0.3;
+    double ZINS2 = 0.4;
+
+    void addZins (int dauer);
+}
+
+public abstract class KSparvertrag {
+    private String sparer;
+    private String vertragTyp;
+
+    public KSparvertrag(String sparer, String vertragTyp) {
+        this.sparer = sparer;
+        this.vertragTyp = vertragTyp;
+    }
+
+    public String getVertragTyp() {
+        return vertragTyp;
+    }
+
+    void setVertragTyp(String vertragTyp) {
+        this.vertragTyp = vertragTyp;
+    }
+
+    public String getSparer() {
+        return sparer;
+    }
+
+    void setSparer(String sparer) {
+        this.sparer = sparer;
+    }
+}
+
+public class KNormSparvertrag extends Sparvertrag implements KZinsen{
+    private double guthaben;
+
+    public KNormSparvertrag(String sparer, String vertragsTyp, double guthaben) {
+        super(sparer, "Normaler Sparvertrag");
+        setGuthaben(guthaben);
+    }
+
+    public double getGuthaben() {
+        return guthaben;
+    }
+
+    void setGuthaben(double guthaben) {
+        this.guthaben = guthaben;
+    }
+
+    public void addZins(int dauer) {
+        if (dauer <= 5) {
+            System.out.print(getGuthaben()*ZINS1/100+getGuthaben());
+        } else
+            System.out.print(getGuthaben()*ZINS2/100+getGuthaben());
+    }
+}
+
+public class KVertragPlus extends NormSparvertrag {
+
+    public KVertragPlus(String sparer, String vertragsTyp, double guthaben) {
+        super(sparer, "VertragPlus", guthaben);
+    }
+
+    public void addZins(int dauer) {
+        if (dauer < 1) {
+            dauer = 1;
+            System.out.println("Die Dauer muss 1 oder größer sein!");
+        }
+        else if (dauer > 9) {
+            dauer = 9;
+            System.out.println("Die Dauer muss 9 oder kleiner sein!");
+        }
+        else
+            dauer = dauer;
+
+        super.addZins(dauer);
+    }
+}
+
+
+public class KVertragPlus extends NormSparvertrag {
+
+    public KVertragPlus(String sparer, String vertragsTyp, double guthaben) {
+        super(sparer, "VertragPlus", guthaben);
+    }
+
+    public void addZins(int dauer) {
+        if (dauer < 1) {
+            dauer = 1;
+            System.out.println("Die Dauer muss 1 oder größer sein!");
+        }
+        else if (dauer > 9) {
+            dauer = 9;
+            System.out.println("Die Dauer muss 9 oder kleiner sein!");
+        }
+        else
+            dauer = dauer;
+
+        super.addZins(dauer);
+    }
+}
+
+public class KSparvertragApp {
+    public static void main (String[] args) {
+
+        KBankSparvertraege vertraege = new KBankSparvertraege("Vertrag XYZ");
+
+        KNormSparvertrag norm = new KNormSparvertrag("Jasmin", "NormSparvertrag", 1000);
+        vertraege.vertragHinzufügen(norm.getSparer(), norm.getGuthaben(), norm.getVertragsTyp());
+
+        System.out.println("Sparer: " + norm.getSparer());
+        System.out.print("Neues Guthaben: ");
+        norm.addZins(4);
+        
+
+    }
+}
