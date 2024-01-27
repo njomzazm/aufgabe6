@@ -1,0 +1,44 @@
+public class Klausur6 {
+    public static void main (String[] args) {
+        char[] array = eingabe().toCharArray();
+
+        System.out.println(zeichen(array));
+    }
+
+// Teil a
+    static int zeichen(char[] a) {
+        int max = 0;
+        int min =0;
+        int zaehler=0;
+        int zahl =0;
+
+        if(a[0] > a[1]) {
+            max = a[0];
+            min = a[1];
+        }else {
+            max = a[1];
+            min = a[0];
+        }
+
+        while (true) {
+            Random zufall = new Random(max-min);
+            zahl = zufall.nextInt();
+            if (zahl == a[2]) {
+                zaehler++;
+                break;
+            }
+            if (zahl < min || zahl > max) {
+                zaehler = -1;
+                break;
+            }
+        }
+        return zaehler;
+    }
+
+    //Teil b
+    static String eingabe() {
+        String eingabe = JOptionPane.showInputDialog("Geben Sie eine Zeichenkette von 3 Zeichen ein. Die Zeichen müssen im ASCII Bereich 33-126 liegen.");
+        return eingabe;
+   }
+
+}
