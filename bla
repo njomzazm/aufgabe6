@@ -1,0 +1,184 @@
+//Klasse ListNode
+public class ListNode {
+    private Object payload;
+    private ListNode next;
+
+    public ListNode(Object payload, ListNode next) {
+        this.payload = payload;
+        this.next = next;
+    }
+
+    public ListNode getNext() {
+        return next;
+    }
+
+    public void setNext(ListNode next) {
+        this.next = next;
+    }
+
+    public Object getPayload() {
+        return payload;
+    }
+
+    public void setPayload(Object payload) {
+        this.payload = payload;
+    }
+}
+
+
+
+
+//Klasse Singly
+public class SinglyLinkedList {
+    private ListNode start;
+    private ListNode end;
+    private int size;
+
+    public void addElement(Object o){
+        if (start == null){
+            start = new ListNode(o, null);
+            end = start;
+        } else {
+            ListNode ln = new ListNode(o, null);
+            end.setNext(ln);
+            end = ln;
+        }
+        size++;
+    }
+
+    public int getSize(){
+        return size;
+    }
+
+    public Object getFirst(){
+        if(start != null) {
+            return start.getPayload();
+        }
+        else throw new NoSuchElementException();
+    }
+
+    public Object getLast(){
+        if(end != null){
+            return end.getPayload();
+        }
+        else throw new NoSuchElementException();
+    }
+
+    public ListNode findNode(Object o){
+        ListNode ln = start;
+
+        while (ln != null){
+            if(ln.getPayload().equals(o)){
+                return ln;
+            } else
+            ln = ln.getNext();
+        }
+        return null;
+    }
+
+    public ListNode findPredecessorNode(Object o){
+        ListNode ln = start;
+
+        while (ln != null){
+            if (ln.getNext() != null) {
+                if(ln.getPayload().equals(o)) {
+                    if (ln.getNext().getPayload().equals(o)) {
+                        return ln;
+                    }
+                    ln = ln.getNext();
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean remove(Object o){
+        ListNode ln = findPredecessorNode(o);
+            if(start.getPayload().equals(o)){
+                start = start.getNext();
+                size--;
+                return true;
+            }
+            else if (ln == null){
+                return false;
+        }
+            else {
+                ListNode del = ln.getNext();
+                ln.setNext(del.getNext());
+                del.setNext(null);
+                size--;
+                return true;
+            }
+    }
+
+    public void printAllElements(){
+        ListNode ln = start;
+        while (ln != null) {
+            System.out.println(ln.getPayload());
+            ln = ln.getNext();
+        }
+    }
+
+    public Object get(int index){
+        if (index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        ListNode ln = start;
+        for(int i = 0; i < index; i++){
+            ln = ln.getNext();
+        }
+        return ln.getPayload();
+    }
+
+    public void removeAt(int index){
+        remove(get(index));
+    }
+
+    public boolean contains(Object o){
+        ListNode ln = start;
+
+        while (ln != null){
+            if(ln.getPayload().equals(o)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void clear(){
+        ListNode ln = start;
+
+        while (ln != null){
+            size--;
+        }
+    }
+}
+
+
+
+
+
+
+//Klasse Main
+public class MainAppSinglyLinkedList {
+    public static void main (String[] args) {
+
+        SinglyLinkedList list = new SinglyLinkedList();
+        //ListNode node = new ListNode();
+
+        list.addElement((Object) "njomza");
+        list.addElement((Object) "jasmin");
+        list.addElement((Object) "leonie");
+
+
+
+       // System.out.println(list.getSize());
+        //  System.out.println(list.getFirst());
+       //System.out.println(list.findNode((Object)"jasmin").getPayload());
+        list.printAllElements();
+        System.out.println(list.remove((Object)"leonie"));
+        list.printAllElements();
+       // System.out.println(list.contains((Object) "jasmin"));
+        //list.removeAt(1);
+       // System.out.println(list.get(0));
